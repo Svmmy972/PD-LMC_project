@@ -1,0 +1,19 @@
+# Core scientific stack
+numpy>=1.26,<3
+matplotlib>=3.8,<4
+tqdm>=4.66,<5
+
+# PyTorch stack (MNIST classifier + sampling code)
+torch>=2.3,<2.8
+torchvision>=0.18,<0.23
+
+# Diffusion stack
+diffusers==0.37.0
+transformers>=4.41,<5
+accelerate>=0.31,<2
+safetensors>=0.4.3
+huggingface-hub>=0.23,<1
+
+# Notebook integration
+ipykernel>=6.29,<7
+ipywidgets>=8.1,<9
