@@ -42,29 +42,29 @@ The first part implements a **primal-dual Langevin Monte Carlo (PD-LMC)** sample
 ### Target distribution
 
 I consider a 2D Gaussian target
-$$
+```math
 \pi(x) \propto \exp(-f(x))
-$$
+```
 with quadratic energy defined in `PD_LMC/density.py`.
 
 ### Constraint
 
 Instead of the unit ball used in the original example, I impose the axis-aligned ellipsoid
-$$
+```math
 \left(\frac{x_1-c_1}{r_x}\right)^2 + \left(\frac{x_2-c_2}{r_y}\right)^2 \le 1,
-$$
+```
 implemented in `PD_LMC/constraint.py`.
 
 ### PD-LMC update
 
 At each iteration, the sampler uses the constrained energy
-$$
+```math
 U(x,\lambda) = f(x) + \lambda\, g(x),
-$$
+```
 with
-$$
+```math
 g(x) = \mathrm{ReLU}(h(x)) - \varepsilon,
-$$
+```
 where $h(x)\le 0$ defines feasibility and $\varepsilon$ is a small slack.
 
 The implementation in `PD_LMC/pd_lmc.py` alternates:
@@ -109,21 +109,21 @@ In other words, this is a **training-free primal-dual guidance strategy inspired
 ### Generic form
 
 At reverse time $t$, I use the clean estimate
-$$
+```math
 \hat x_0 = \hat x_0(x_t,t),
-$$
+```
 define a constraint violation $h(\hat x_0)$, update
-$$
+```math
 \lambda \leftarrow [\lambda + \eta_\lambda h(\hat x_0)]_+,
-$$
+```
 and apply a correction of the form
-$$
+```math
 x_{t-1}
 =
 \text{DDPMstep}(x_t)
 -
 \eta_x \nabla_{x_t}\big(\lambda\, h(\hat x_0(x_t,t))\big).
-$$
+```
 
 This preserves the original pretrained model and only modifies sampling.
 
@@ -140,13 +140,13 @@ Generate a digit from a target class **without retraining** the diffusion model.
 ### Constraint
 
 A pretrained classifier is used to define the constraint on the estimated clean image:
-$$
+```math
 h(\hat x_0) = \tau - p_\phi(y=c \mid \hat x_0),
-$$
+```
 so the goal is to enforce
-$$
+```math
 p_\phi(y=c \mid \hat x_0) \ge \tau.
-$$
+```
 
 ### Implementation
 
@@ -179,18 +179,18 @@ Increase image brightness while keeping the generated face close to a reference 
 Two constraints are used simultaneously:
 
 1. **brightness constraint**
-   $$
+   ```math
    h_{\text{light}}(\hat x_0)=b^\star-\mathrm{mean}(\hat x_0),
-   $$
+   ```
 2. **structure constraint**
-   $$
+   ```math
    h_{\text{struct}}(\hat x_0)=\mathrm{MSE}(\hat x_0, x_{\text{ref}})-\varepsilon.
-   $$
+   ```
 
 This leads to two dual variables:
-$$
+```math
 \lambda_{\text{light}}, \lambda_{\text{struct}}.
-$$
+```
 
 ### Implementation
 
