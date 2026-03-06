@@ -61,11 +61,6 @@ At each iteration, the sampler uses the constrained energy
 ```math
 U(x,\lambda) = f(x) + \lambda\, g(x),
 ```
-with
-```math
-g(x) = \mathrm{ReLU}(h(x)) - \varepsilon,
-```
-where $h(x)\le 0$ defines feasibility and $\varepsilon$ is a small slack.
 
 The implementation in `PD_LMC/pd_lmc.py` alternates:
 
@@ -255,9 +250,3 @@ Notes:
 - the MNIST part can train/load a small classifier and then run the guided DDPM experiment;
 - the CelebA-HQ part downloads a pretrained diffusion model from Hugging Face and is heavier to run.
 
----
-
-## Notes
-
-- The implementation is intentionally simple and explicit rather than heavily optimized.
-- The bonus should be read as a **proof of concept** showing how the primal-dual idea may be adapted to diffusion-based generation without retraining.
